@@ -1,0 +1,4 @@
+/* Minimal wrapper, main layout handled by Crossword.css */
+#root {
+  min-height: 100vh;
+}
