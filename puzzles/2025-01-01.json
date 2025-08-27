@@ -1,0 +1,33 @@
+{
+  "date": "2025-01-01",
+  "title": "Fresh Start",
+  "author": "Crossword AI",
+  "grid": [
+    "GO#US",
+    "ALERT",
+    "#IRA#",
+    "OVALS",
+    "BE#SE"
+  ],
+  "clues": {
+    "across": [
+      "Proceed",
+      "Opposite of them",
+      "Wide awake",
+      "Retirement acct., briefly",
+      "Racetrack shapes",
+      "Exist",
+      "Compass dir."
+    ],
+    "down": [
+      "Peach State abbr.",
+      "Martini garnish",
+      "Range east of the Volga",
+      "Ave. crosser",
+      "Baseball stat",
+      "Delivery-room doc",
+      "Compass dir."
+    ]
+  }
+}
+
