@@ -1,0 +1,27 @@
+{
+  "title": "Open Mini Sample",
+  "author": "Open Source",
+  "date": "2025-01-01",
+  "size": { "rows": 5, "cols": 5 },
+  "grid": [
+    "APPLE",
+    "P#E#R",
+    "ERA#A",
+    "REDO#",
+    "EARS#"
+  ],
+  "clues": {
+    "across": {
+      "1": "Fruit that keeps the doctor away",
+      "3": "Letter after D",
+      "4": "Prefix with mail",
+      "5": "Do again"
+    },
+    "down": {
+      "1": "Period of history",
+      "2": "Color akin to crimson",
+      "3": "Hearing organs"
+    }
+  }
+}
+
