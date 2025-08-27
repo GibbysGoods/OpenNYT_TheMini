@@ -22,17 +22,8 @@
         <div class="grid-meta">
           <div>
             <span id="puzzleTitle" class="muted"></span>
-            <span id="puzzleAuthor" class="muted"></span>
           </div>
           <div class="control-row">
-            <button id="toggleDirBtn" class="primary" title="Toggle direction (Space)">Toggle ↔/↕</button>
-            <div class="divider"></div>
-            <button id="checkWordBtn" class="ghost">Check word</button>
-            <button id="revealWordBtn" class="ghost">Reveal word</button>
-            <div class="divider"></div>
-            <button id="checkPuzzleBtn" class="ghost">Check puzzle</button>
-            <button id="revealPuzzleBtn" class="ghost">Reveal puzzle</button>
-            <div class="divider"></div>
             <button id="clearAllBtn" class="danger ghost">Clear</button>
           </div>
         </div>
@@ -53,6 +44,13 @@
 
     <footer class="app-footer">
       <p class="muted">Type letters to fill. Arrow keys move. Space toggles direction. Enter/Tab jumps to next clue.</p>
+      <div class="footer-controls control-row">
+        <button id="checkWordBtn" class="ghost">Check word</button>
+        <button id="checkPuzzleBtn" class="ghost">Check puzzle</button>
+        <div class="divider"></div>
+        <button id="revealWordBtn" class="ghost">Reveal word</button>
+        <button id="revealPuzzleBtn" class="ghost">Reveal puzzle</button>
+      </div>
     </footer>
 
     <script src="./script.js" defer></script>

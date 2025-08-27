@@ -115,6 +115,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .toast.show { opacity: 1; }
 
 .app-footer { padding: 12px 24px; text-align: center; color: var(--muted); font-size: 13px; }
+.footer-controls { justify-content: center; margin-top: 10px; }
 
 @media (max-width: 920px) {
   :root { --cell-size: 56px; }
