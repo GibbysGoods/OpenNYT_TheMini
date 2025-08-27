@@ -5,8 +5,7 @@
   const gridEl = document.getElementById('grid');
   const acrossListEl = document.getElementById('acrossClues');
   const downListEl = document.getElementById('downClues');
-  const prevBtn = document.getElementById('prevPuzzleBtn');
-  const nextBtn = document.getElementById('nextPuzzleBtn');
+  
   const toggleDirBtn = document.getElementById('toggleDirBtn');
   const checkWordBtn = document.getElementById('checkWordBtn');
   const revealWordBtn = document.getElementById('revealWordBtn');
@@ -34,7 +33,7 @@
   let focusedCellId = null;
   let direction = 'across'; // 'across' | 'down'
 
-  let availableDates = [];
+  
 
   function showToast(message, ms = 1500) {
     toastEl.textContent = message;
@@ -56,28 +55,12 @@
     return res.json();
   }
 
-  async function loadIndex() {
-    const idx = await fetchJson('./puzzles/index.json');
-    if (!Array.isArray(idx) || idx.length === 0) throw new Error('Empty puzzles index');
-    availableDates = idx.map(e => e.date).sort();
-    return idx;
-  }
-
-  function findClosestAvailableDate(targetDate) {
-    if (availableDates.includes(targetDate)) return targetDate;
-    // pick the latest date not after target; else fallback to latest overall
-    const sorted = [...availableDates].sort();
-    const before = sorted.filter(d => d <= targetDate);
-    if (before.length) return before[before.length - 1];
-    return sorted[sorted.length - 1];
-  }
+  
 
   async function loadPuzzle(dateStr) {
-    let resolved = findClosestAvailableDate(dateStr);
-    const meta = { date: resolved };
     try {
-      puzzle = await fetchJson(`./puzzles/${resolved}.json`);
-      puzzle.date = resolved;
+      puzzle = await fetchJson(`./puzzles/${dateStr}.json`);
+      puzzle.date = dateStr;
       titleEl.textContent = puzzle.title ? `“${puzzle.title}”` : '';
       authorEl.textContent = puzzle.author ? `by ${puzzle.author}` : '';
     } catch (e) {
@@ -452,16 +435,7 @@
     saveProgress();
   }
 
-  // Navigation helpers
-  prevBtn.addEventListener('click', () => navigateRelative(-1));
-  nextBtn.addEventListener('click', () => navigateRelative(1));
-  function navigateRelative(delta) {
-    const i = availableDates.indexOf(puzzle.date);
-    if (i === -1) return;
-    const j = Math.min(Math.max(i + delta, 0), availableDates.length - 1);
-    const d = availableDates[j];
-    loadPuzzle(d);
-  }
+  // Navigation helpers removed (date locked to today)
 
   toggleDirBtn.addEventListener('click', toggleDirection);
   checkWordBtn.addEventListener('click', () => { const e = entryForCell(focusedCellId); if (e) checkEntry(e); });
@@ -475,7 +449,6 @@
   // Init
   (async function init() {
     try {
-      await loadIndex();
       await loadPuzzle(todayDateStr());
     } catch (e) {
       console.error(e);
