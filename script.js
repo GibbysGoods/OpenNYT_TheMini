@@ -5,7 +5,6 @@
   const gridEl = document.getElementById('grid');
   const acrossListEl = document.getElementById('acrossClues');
   const downListEl = document.getElementById('downClues');
-  const datePickerEl = document.getElementById('datePicker');
   const prevBtn = document.getElementById('prevPuzzleBtn');
   const nextBtn = document.getElementById('nextPuzzleBtn');
   const toggleDirBtn = document.getElementById('toggleDirBtn');
@@ -49,16 +48,7 @@
     return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
   }
 
-  function getUrlDateParam() {
-    const url = new URL(window.location.href);
-    const d = url.searchParams.get('date');
-    return d && /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : null;
-  }
-  function setUrlDateParam(d) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('date', d);
-    history.replaceState({}, '', url.toString());
-  }
+  // Date selection removed: always use today's date on startup
 
   async function fetchJson(path) {
     const res = await fetch(path, { cache: 'no-store' });
@@ -70,11 +60,6 @@
     const idx = await fetchJson('./puzzles/index.json');
     if (!Array.isArray(idx) || idx.length === 0) throw new Error('Empty puzzles index');
     availableDates = idx.map(e => e.date).sort();
-    // set date picker bounds
-    try {
-      datePickerEl.min = availableDates[0];
-      datePickerEl.max = availableDates[availableDates.length - 1];
-    } catch {}
     return idx;
   }
 
@@ -100,8 +85,6 @@
       showToast('Failed to load puzzle');
       return;
     }
-    datePickerEl.value = resolved;
-    setUrlDateParam(resolved);
     hydrateModelFromPuzzle();
     renderAll();
     restoreProgress();
@@ -487,17 +470,13 @@
   revealPuzzleBtn.addEventListener('click', revealPuzzle);
   clearAllBtn.addEventListener('click', clearAll);
 
-  datePickerEl.addEventListener('change', () => {
-    const val = datePickerEl.value;
-    if (/^\d{4}-\d{2}-\d{2}$/.test(val)) { loadPuzzle(val); }
-  });
+  // Date picker removed
 
   // Init
   (async function init() {
     try {
       await loadIndex();
-      const urlDate = getUrlDateParam();
-      await loadPuzzle(urlDate || todayDateStr());
+      await loadPuzzle(todayDateStr());
     } catch (e) {
       console.error(e);
       showToast('Error initializing app');

@@ -44,14 +44,6 @@ body {
 .brand h1 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: .4px; }
 
 .header-controls { display: flex; align-items: center; gap: 10px; }
-.header-controls input[type="date"] {
-  color-scheme: dark;
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid #1c2130;
-  border-radius: 8px;
-  padding: 8px 10px;
-}
 
 .layout {
   display: grid;
