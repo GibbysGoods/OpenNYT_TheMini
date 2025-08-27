@@ -62,12 +62,32 @@
       titleEl.textContent = puzzle.title ? `“${puzzle.title}”` : '';
     } catch (e) {
       console.error(e);
-      showToast('Failed to load puzzle');
-      return;
+      showToast(`Failed to load puzzle for ${dateStr}`);
+      return false;
     }
     hydrateModelFromPuzzle();
     renderAll();
     restoreProgress();
+    return true;
+  }
+
+  async function loadLatestAvailablePuzzle() {
+    try {
+      const index = await fetchJson(`./puzzles/index.json`);
+      if (!Array.isArray(index) || index.length === 0) throw new Error('Empty puzzle index');
+      const sorted = [...index].sort((a, b) => (a.date < b.date ? 1 : -1));
+      const latest = sorted[0];
+      if (!latest?.date) throw new Error('Invalid puzzle index entries');
+      const ok = await loadPuzzle(latest.date);
+      if (ok) {
+        showToast(`Loaded latest puzzle: ${latest.date}`);
+      }
+      return ok;
+    } catch (e) {
+      console.error(e);
+      showToast('Failed to load latest available puzzle');
+      return false;
+    }
   }
 
   function hydrateModelFromPuzzle() {
@@ -169,7 +189,9 @@
 
   function renderClues() {
     acrossListEl.innerHTML = '';
-    for (const [num, entry] of acrossEntries) {
+    const acrossNums = [...acrossEntries.keys()].sort((a, b) => a - b);
+    for (const num of acrossNums) {
+      const entry = acrossEntries.get(num);
       const li = document.createElement('li');
       li.className = 'clue';
       li.dataset.entry = String(num);
@@ -179,7 +201,9 @@
       acrossListEl.appendChild(li);
     }
     downListEl.innerHTML = '';
-    for (const [num, entry] of downEntries) {
+    const downNums = [...downEntries.keys()].sort((a, b) => a - b);
+    for (const num of downNums) {
+      const entry = downEntries.get(num);
       const li = document.createElement('li');
       li.className = 'clue';
       li.dataset.entry = String(num);
@@ -188,7 +212,7 @@
       li.addEventListener('click', () => selectEntry(num, 'down'));
       downListEl.appendChild(li);
     }
-    updateActiveClue();
+    updateHighlights();
   }
 
   function isEntryStart(cell, dir) {
@@ -439,11 +463,14 @@
 
   // Init
   (async function init() {
-    try {
-      await loadPuzzle(todayDateStr());
-    } catch (e) {
-      console.error(e);
-      showToast('Error initializing app');
+    const today = todayDateStr();
+    const ok = await loadPuzzle(today);
+    if (!ok) {
+      const fallbackOk = await loadLatestAvailablePuzzle();
+      if (!fallbackOk) {
+        console.error('No puzzles could be loaded');
+        showToast('Error initializing app');
+      }
     }
   })();
 })();

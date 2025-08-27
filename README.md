@@ -5,7 +5,7 @@ A clean, minimal, modern 5×5 crossword app inspired by the Mini. Built as stati
 ## Quick start
 
 - Open `index.html` in a browser, or push this repo to GitHub and enable GitHub Pages on the `main` branch.
-- The app loads puzzles from `puzzles/index.json` and individual daily files named `YYYY-MM-DD.json`.
+- The app loads today's puzzle `puzzles/YYYY-MM-DD.json`. If missing, it falls back to the latest listed in `puzzles/index.json`.
 
 ## File structure
 
