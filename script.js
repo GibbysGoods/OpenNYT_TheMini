@@ -6,14 +6,12 @@
   const acrossListEl = document.getElementById('acrossClues');
   const downListEl = document.getElementById('downClues');
   
-  const toggleDirBtn = document.getElementById('toggleDirBtn');
   const checkWordBtn = document.getElementById('checkWordBtn');
   const revealWordBtn = document.getElementById('revealWordBtn');
   const checkPuzzleBtn = document.getElementById('checkPuzzleBtn');
   const revealPuzzleBtn = document.getElementById('revealPuzzleBtn');
   const clearAllBtn = document.getElementById('clearAllBtn');
   const titleEl = document.getElementById('puzzleTitle');
-  const authorEl = document.getElementById('puzzleAuthor');
   const toastEl = document.getElementById('toast');
 
   const STORAGE_PREFIX = 'mini-crossword-';
@@ -62,7 +60,6 @@
       puzzle = await fetchJson(`./puzzles/${dateStr}.json`);
       puzzle.date = dateStr;
       titleEl.textContent = puzzle.title ? `“${puzzle.title}”` : '';
-      authorEl.textContent = puzzle.author ? `by ${puzzle.author}` : '';
     } catch (e) {
       console.error(e);
       showToast('Failed to load puzzle');
@@ -437,7 +434,6 @@
 
   // Navigation helpers removed (date locked to today)
 
-  toggleDirBtn.addEventListener('click', toggleDirection);
   checkWordBtn.addEventListener('click', () => { const e = entryForCell(focusedCellId); if (e) checkEntry(e); });
   revealWordBtn.addEventListener('click', () => { const e = entryForCell(focusedCellId); if (e) revealEntry(e); });
   checkPuzzleBtn.addEventListener('click', checkPuzzle);
