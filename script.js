@@ -93,42 +93,36 @@
         });
       }
     }
-    // numbering
+    // numbering (single pass, shared numbers for across & down starting at the same cell)
     let num = 0;
     const get = (r,c) => (r<0||c<0||r>=rows||c>=cols) ? null : cells[r*cols+c];
-    // across
-    for (let r=0;r<rows;r++){
-      for (let c=0;c<cols;c++){
-        const cell = get(r,c);
+    const startCellNum = new Map(); // cell.id -> shared clue number
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cell = get(r, c);
         if (!cell || cell.isBlock) continue;
-        const isStart = (c===0 || get(r,c-1).isBlock);
-        if (isStart) {
-          num++;
+        const isStartAcross = (c === 0 || get(r, c-1).isBlock);
+        const isStartDown = (r === 0 || get(r-1, c).isBlock);
+        if (!isStartAcross && !isStartDown) continue;
+        let assigned = startCellNum.get(cell.id);
+        if (!assigned) { assigned = ++num; startCellNum.set(cell.id, assigned); }
+        if (isStartAcross) {
           const entryCells = [];
           let cc = c;
-          while (cc<cols && !get(r,cc).isBlock){ entryCells.push(get(r,cc).id); cc++; }
+          while (cc < cols && !get(r, cc).isBlock) { entryCells.push(get(r, cc).id); cc++; }
           const answer = entryCells.map(id => cells[id].solution).join('');
           const clueText = (puzzle.clues?.across?.[acrossEntries.size] ?? '');
-          entryCells.forEach(id => cells[id].numberAcross = num);
-          acrossEntries.set(num, { id: num, cells: entryCells, answer, clue: clueText, direction: 'across' });
+          entryCells.forEach(id => cells[id].numberAcross = assigned);
+          acrossEntries.set(assigned, { id: assigned, cells: entryCells, answer, clue: clueText, direction: 'across' });
         }
-      }
-    }
-    // down
-    for (let r=0;r<rows;r++){
-      for (let c=0;c<cols;c++){
-        const cell = get(r,c);
-        if (!cell || cell.isBlock) continue;
-        const isStart = (r===0 || get(r-1,c).isBlock);
-        if (isStart) {
-          num++;
+        if (isStartDown) {
           const entryCells = [];
           let rr = r;
-          while (rr<rows && !get(rr,c).isBlock){ entryCells.push(get(rr,c).id); rr++; }
+          while (rr < rows && !get(rr, c).isBlock) { entryCells.push(get(rr, c).id); rr++; }
           const answer = entryCells.map(id => cells[id].solution).join('');
           const clueText = (puzzle.clues?.down?.[downEntries.size] ?? '');
-          entryCells.forEach(id => cells[id].numberDown = num);
-          downEntries.set(num, { id: num, cells: entryCells, answer, clue: clueText, direction: 'down' });
+          entryCells.forEach(id => cells[id].numberDown = assigned);
+          downEntries.set(assigned, { id: assigned, cells: entryCells, answer, clue: clueText, direction: 'down' });
         }
       }
     }
