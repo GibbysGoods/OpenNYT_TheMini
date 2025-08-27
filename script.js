@@ -252,15 +252,16 @@
   function onCellClick(cellId) {
     const cell = cells[cellId];
     if (!cell || cell.isBlock) return;
+    // If tapping the already-focused cell, toggle direction
+    if (focusedCellId === cellId) {
+      toggleDirection();
+      return;
+    }
     const startAcross = isEntryStart(cell, 'across');
     const startDown = isEntryStart(cell, 'down');
     if (startAcross || startDown) {
       if (startAcross && startDown) {
-        if (focusedCellId === cellId && direction === 'across') {
-          selectEntry(cell.numberDown, 'down');
-        } else {
-          selectEntry(cell.numberAcross, 'across');
-        }
+        selectEntry(cell.numberAcross, 'across');
       } else if (startAcross) {
         selectEntry(cell.numberAcross, 'across');
       } else {
