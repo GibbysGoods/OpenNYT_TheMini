@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Mini Crossword</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">✦</div>
+        <h1>The Mini Crossword</h1>
+      </div>
+      <div class="header-controls">
+        <button id="prevPuzzleBtn" class="ghost" title="Previous available puzzle">◀</button>
+        <input id="datePicker" type="date" aria-label="Pick puzzle date" />
+        <button id="nextPuzzleBtn" class="ghost" title="Next available puzzle">▶</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="grid-panel">
+        <div class="grid-meta">
+          <div>
+            <span id="puzzleTitle" class="muted"></span>
+            <span id="puzzleAuthor" class="muted"></span>
+          </div>
+          <div class="control-row">
+            <button id="toggleDirBtn" class="primary" title="Toggle direction (Space)">Toggle ↔/↕</button>
+            <div class="divider"></div>
+            <button id="checkWordBtn" class="ghost">Check word</button>
+            <button id="revealWordBtn" class="ghost">Reveal word</button>
+            <div class="divider"></div>
+            <button id="checkPuzzleBtn" class="ghost">Check puzzle</button>
+            <button id="revealPuzzleBtn" class="ghost">Reveal puzzle</button>
+            <div class="divider"></div>
+            <button id="clearAllBtn" class="danger ghost">Clear</button>
+          </div>
+        </div>
+        <div id="grid" class="grid" role="grid" aria-label="Mini crossword grid"></div>
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      </section>
+      <aside class="clues-panel">
+        <div class="clues">
+          <h2>Across</h2>
+          <ol id="acrossClues" class="clue-list"></ol>
+        </div>
+        <div class="clues">
+          <h2>Down</h2>
+          <ol id="downClues" class="clue-list"></ol>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="app-footer">
+      <p class="muted">Type letters to fill. Arrow keys move. Space toggles direction. Enter/Tab jumps to next clue.</p>
+    </footer>
+
+    <script src="./script.js" defer></script>
+  </body>
+  </html>
+
