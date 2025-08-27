@@ -9,12 +9,13 @@ async function fetchJson(path: string): Promise<any> {
 
 export async function loadPuzzleByDate(date: Date): Promise<Puzzle> {
   const dateStr = formatDateYYYYMMDD(date)
-  const dailyPath = `/puzzles/${dateStr}.json`
+  const base = import.meta.env.BASE_URL || '/'
+  const dailyPath = `${base}puzzles/${dateStr}.json`
   try {
     return await fetchJson(dailyPath)
   } catch {
     // fallback to sample
-    return await fetchJson('/puzzles/sample.json')
+    return await fetchJson(`${base}puzzles/sample.json`)
   }
 }
 

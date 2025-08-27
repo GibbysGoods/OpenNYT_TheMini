@@ -69,6 +69,21 @@ npm run build
 npm run preview
 ```
 
+## Deploy to GitHub Pages
+
+1. Ensure your default branch is `main` (or update the workflow trigger).
+2. Go to your repo Settings → Pages → Build and deployment: set Source to "GitHub Actions".
+3. The workflow at `.github/workflows/deploy.yml` builds and deploys on pushes to `main`.
+4. It sets the Vite base path automatically to `/${repo-name}/`.
+
+Local build with base path (to preview locally):
+
+```bash
+# Replace my-repo-name with your repository name
+BASE_PATH=/my-repo-name/ npm run build
+npm run preview
+```
+
 ## License
 
 MIT
