@@ -1,0 +1,25 @@
+{
+  "date": "2025-09-10",
+  "title": "Quick Cross",
+  "author": "Crossword AI",
+  "grid": [
+    "HSPBY",
+    "#E?I#",
+    "QHIST",
+    "#O?A#",
+    "APATE"
+  ],
+  "clues": {
+    "across": [
+      "Feeling joy",
+      "Little noise",
+      "Not asleep"
+    ],
+    "down": [
+      "Large body of water",
+      "Jump on one foot",
+      "Large",
+      "Took a seat"
+    ]
+  }
+}

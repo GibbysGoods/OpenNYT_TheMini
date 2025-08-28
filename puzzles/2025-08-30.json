@@ -1,0 +1,26 @@
+{
+  "date": "2025-08-30",
+  "title": "Quick Cross",
+  "author": "Crossword AI",
+  "grid": [
+    "SEB#S",
+    "MUA#L",
+    "IUTCE",
+    "L#BEE",
+    "E#HOP"
+  ],
+  "clues": {
+    "across": [
+      "Place to sleep",
+      "Young dog",
+      "Fruit drink",
+      "Honey maker",
+      "Large pig"
+    ],
+    "down": [
+      "Happy expression",
+      "Flying mammal",
+      "Rest state"
+    ]
+  }
+}
